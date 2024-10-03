@@ -10,15 +10,22 @@ body {
 
 }
 
+form {
+    padding: 1.5rem 3rem;
+}
+
 .list {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
     gap: 1rem;
+    padding: 1.5rem 3rem;
 }
 
 .list > * {
     padding: 4px 8px;
     border: 1px solid var(--main-dark);
+    border-radius: 5px;
+    box-shadow: .2px .5px 10px .1px var(--secondary-light);
 }
 
 .list h3 {
