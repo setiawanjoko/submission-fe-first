@@ -9,11 +9,34 @@
     <script type="module" src="script.mjs"></script>
 </head>
 <body>
-    <form action="#">
-        <input type="text" name="title" id="title" value="Note Title">
-        <textarea name="body" id="body" cols="40" rows=8">You are supposed to type note body here</textarea>
-        <button type="submit">Simpan</button>
+    <!--
+    TODO: Form for note input 
+    TODO: Form input may be constructed using web component
+    Find a way to convert regular form to web component
+    -->
+    <form>
+        <div class="form-group">
+            <label for="notetitle">Title</label>
+            <input type="text" name="notetitle" id="notetitle" value="Note Title" required>
+            <p id="titleValidation" class="validation-message" aria-live="polite">Tes</p>
+        </div>
+        <div class="form-group">
+            <label for="notebody">Content</label>
+            <textarea name="notebody" id="notebody" cols="40" rows="8" required>You are supposed to type note body here</textarea>
+            <p id="bodyValidation" class="validation-message" aria-live="polite">Tes</p>
+        </div>
+        <div class="form-group">
+            <button type="submit" formnovalidate>Simpan</button>
+        </div>
     </form>
     <div class="list" id="notesList"></div>
+    
+    <!-- 
+    TODO: Another web component are needed to be created.
+    (What content should be displayed)
+    Option: App Bar / Footer / Modal (?)
+    Easy: App bar / Footer
+    Difficult: Modal (What is it for?)
+    -->
 </body>
 </html>

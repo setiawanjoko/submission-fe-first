@@ -3,10 +3,19 @@
     --secondary-dark: #B17457;
     --main-light: #FAF7F0;
     --secondary-light: #D8D2C2;
+
+    --danger: #f30;
+    --info: #4379F2;
+    --success: #798645;
+    --warning: #DD761C;
+}
+
+* {
+    box-sizing: border-box;
 }
 
 body {
-    background-color: #FAF7F0;
+    background-color: var(--main-light);
 
 }
 
@@ -34,4 +43,23 @@ form {
 
 .list p {
     color: var(--secondary-dark);
+}
+
+.form-group {
+    display: grid;
+    gap: 5px;
+}
+
+.validation-message {
+    margin-block-start: 0;
+    color: var(--danger);
+}
+
+button {
+    background-color: var(--secondary-dark);
+    color: var(--main-light);
+    font-weight: 400;
+    letter-spacing: 2px;
+    padding: 5px;
+    text-transform: uppercase;
 }
