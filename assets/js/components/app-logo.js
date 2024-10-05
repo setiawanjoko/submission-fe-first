@@ -1,24 +1,23 @@
 class AppLogo extends HTMLElement {
     _shadowRoot = null
-    _style = null
 
     constructor() {
         super()
 
-        this._shadowRoot = this.attachShadow({mode: 'open'})
-        this._style = document.createElement('style')
+        this._shadowRoot = this.attachShadow({mode: 'closed'})
     }
 
-    _fillStyle() {
-        this._style.textContent = `
+    renderStyle() {
+        let style = document.createElement('style')
+        style.textContent = `
             header > * {
                 color: white;
                 font-family: "Caveat", sans-serif;
             }
 
-                header h2 {
-                    font-size: 2rem;
-                }
+            header h2 {
+                font-size: 2rem;
+            }
 
             @media screen and (min-width: 768px) {
                 header {
@@ -28,6 +27,21 @@ class AppLogo extends HTMLElement {
                 }
             }
         `
+        
+        return style
+    }
+
+    renderHeader() {
+        let header = document.createElement('header')
+        let logo = document.createElement('div')
+        logo.classList.add('logo')
+        let appName = document.createElement('h2')
+        appName.textContent = "Notes App"
+
+        logo.appendChild(appName)
+        header.appendChild(logo)
+
+        return header
     }
 
     connectedCallback() {
@@ -35,16 +49,15 @@ class AppLogo extends HTMLElement {
     }
 
     render() {
-        this._fillStyle()
-
-        this._shadowRoot.appendChild(this._style)
-        this._shadowRoot.innerHTML += `
-        <header>
-            <div class="logo">
-                <h2>Notes App</h2>
-            </div>
-        </header>
-        `
+        this._shadowRoot.appendChild(this.renderStyle())
+        this._shadowRoot.appendChild(this.renderHeader())
+        // this._shadowRoot.innerHTML += `
+        // <header>
+        //     <div class="logo">
+        //         <h2>Notes App</h2>
+        //     </div>
+        // </header>
+        // `
     }
 }
 
