@@ -1,5 +1,6 @@
 import data from "./dummy/data.js"
 import './components/index.js'
+import './validations/index.js'
 
 const LOCAL_STORAGE_KEY = 'notes_fe_subs'
 const notes = JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY)) || []
@@ -12,19 +13,11 @@ const createNoteItemElement = ({id}) => {
     return container
 }
 
-const form = document.querySelector('form')
-const titleInput = form.elements.noteTitle
-
-
-form.addEventListener('submit', (e) => e.preventDefault())
-
 if(typeof Storage !== 'undefined') {
     if(localStorage.getItem(LOCAL_STORAGE_KEY) === null) {
         localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(data))
         notes.push(JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY)))
     }
-
-    //console.log(notes)
 
     notes.forEach(note => {
         const element = createNoteItemElement(note)
