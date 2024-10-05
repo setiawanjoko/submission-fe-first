@@ -26,8 +26,14 @@
             <button type="submit" formnovalidate>Simpan</button>
         </div>
     </form>
-    <main class="list" id="notesList">
+    <main>
         <h2 class="card-title">Notes</h2>
+        <div class="notes-filter">
+            <notes-filter active note-scope="all"></notes-filter> | 
+            <notes-filter note-scope="no-archive"></notes-filter> | 
+            <notes-filter note-scope="archive"></notes-filter>
+        </div>
+        <notes-container note-scope="all" class="list" id="notesList"></notes-container>
     </main>
     <app-footer></app-footer>
 </body>
