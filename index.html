@@ -5,10 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Submission Frontend Ke Satu</title>
 
-    <link rel="stylesheet" href="style.css">
-    <script type="module" src="script.mjs"></script>
+    <link rel="stylesheet" href="./assets/css/style.css">
+    <script type="module" src="./assets/js/script.js"></script>
 </head>
 <body>
+    <app-logo></app-logo>
     <!--
     TODO: Form for note input 
     TODO: Form input may be constructed using web component
@@ -17,7 +18,7 @@
     <form>
         <div class="form-group">
             <label for="notetitle">Title</label>
-            <input type="text" name="notetitle" id="notetitle" value="Note Title" required>
+            <input type="text" name="notetitle" id="notetitle" value="Note Title"  required>
             <p id="titleValidation" class="validation-message" aria-live="polite">Tes</p>
         </div>
         <div class="form-group">

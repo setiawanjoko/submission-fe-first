@@ -1,4 +1,4 @@
-import data from "./data.mjs"
+import data from "../dummy/data.js"
 
 class NoteItem extends HTMLElement {
     constructor() {

@@ -1,0 +1,74 @@
+@import url('./common.css');
+
+form {
+    background-color: var(--main-light);
+    padding: 1rem 1rem;
+    border-radius: 8px;
+}
+    
+.form-group {
+    display: grid;
+    gap: 5px;
+}
+
+.validation-message {
+    margin-block-start: 0;
+    color: var(--danger);
+}
+
+button {
+    background-color: var(--secondary-dark);
+    color: var(--main-light);
+    font-weight: 400;
+    letter-spacing: 2px;
+    padding: 5px;
+    text-transform: uppercase;
+}
+
+.list {
+    background-color: var(--main-light);
+    border-radius: 8px;
+    display: grid;
+    gap: 1rem;
+    margin-top: 1rem;
+    padding: 1rem;
+}
+    
+.list > * {
+    padding: 4px 8px;
+    border: 1px solid var(--main-dark);
+    border-radius: 5px;
+    box-shadow: .2px .5px 10px .1px var(--secondary-light);
+}
+    
+.list h3 {
+    color:var(--main-dark);
+}
+
+.list p {
+    color: var(--main-dark);
+}
+
+/* CSS Rules for desktop */
+@media screen and (min-width: 1200px) {
+    form {
+        padding: 1.5rem 3rem;
+    }
+
+    .list {
+        grid-template-columns: 1fr 1fr 1fr;
+        padding: 1.5rem 3rem;
+    }
+}
+
+/* CSS Rules for tablet */
+@media screen and (min-width: 768px) and (max-width: 1199px) {
+    .list {
+        grid-template-columns: 1fr 1fr;
+    }
+}
+
+/* CSS Rules for phone */
+@media screen and (max-width: 767px) {
+
+}
