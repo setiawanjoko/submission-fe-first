@@ -11,6 +11,7 @@
 <body>
     <app-logo></app-logo>
     <form>
+        <h2 class="card-title">Add Notes</h2>
         <div class="form-group">
             <label for="notetitle">Title</label>
             <input type="text" name="notetitle" id="notetitle" value="Note Title" minlength="10" autocomplete="off" required aria-describedby="titleValidation">
@@ -25,7 +26,9 @@
             <button type="submit" formnovalidate>Simpan</button>
         </div>
     </form>
-    <main class="list" id="notesList"></main>
+    <main class="list" id="notesList">
+        <h2 class="card-title">Notes</h2>
+    </main>
     <app-footer></app-footer>
 </body>
 </html>
