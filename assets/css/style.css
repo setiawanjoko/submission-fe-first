@@ -47,6 +47,15 @@ main > .notes-filter {
     grid-column: span 1;
     align-self: center;
     text-align: end;
+    display: flex;
+    flex-wrap: nowrap;
+    gap: 10px;
+    justify-content: end;
+    align-items: center;
+}
+
+.material-symbols-outlined {
+    margin-left: 10px;
 }
 
 .list {

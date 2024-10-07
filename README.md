@@ -11,5 +11,11 @@
 
 - [x] Memiliki Tampilan yang Menarik
 - [x] Menerapkan Realtime Validation pada Formulir
-- [ ] Menerapkan Custom Attribute pada Custom Element
+- [x] Menerapkan Custom Attribute pada Custom Element
 - [x] Memiliki Tampilan yang Responsive di Berbagai Perangkat
+
+## User Target
+
+- [ ] Add New Notes to Local Storage
+- [ ] Archive and Activate Notes
+- [x] Sorting by date

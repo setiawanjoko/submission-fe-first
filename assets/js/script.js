@@ -1,7 +1,7 @@
 import data from "./dummy/data.js"
+import { LOCAL_STORAGE_KEY } from "./common.js"
 import './components/index.js'
 import './validations/index.js'
-import { LOCAL_STORAGE_KEY } from "./common.js"
 
 if(typeof Storage !== 'undefined') {
     if(localStorage.getItem(LOCAL_STORAGE_KEY) === null) {

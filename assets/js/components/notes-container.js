@@ -1,8 +1,9 @@
 import "./note-item.js";
-import { LOCAL_STORAGE_KEY } from "../common.js";
+import { LOCAL_STORAGE_KEY, RENDER_EVENT } from "../common.js";
+import { getAllNotesHandler } from "../services.js";
 
 class NotesContainer extends HTMLElement {
-  static observedAttributes = ["note-scope"];
+  static observedAttributes = ["note-scope", "sort"];
   validScope = ["all", "no-archive", "archive"];
   _archive = -1
   _notes = [];
@@ -10,11 +11,8 @@ class NotesContainer extends HTMLElement {
   constructor() {
     super();
 
-    this._notes = JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY));
-  }
-
-  connectedCallback() {
-    this.render();
+    this._notes = getAllNotesHandler
+    this._sort = this.getAttribute('sort') || 'desc'
   }
 
   attributeChangedCallback(name, oldValue, newValue) {
@@ -28,27 +26,36 @@ class NotesContainer extends HTMLElement {
         }
         
         if(this._archive == -1) {
-            this._notes = JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY));
+            this._notes = getAllNotesHandler();
         } else {
-            this._notes = JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY)).filter(note => {
+            this._notes = getAllNotesHandler().filter(note => {
                 return note.archived == this._archive
             })
         }
-
-        this.render()
     }
+
+    if(name == 'sort') {
+      this._sort = newValue
+    }
+    this.render()
   }
 
   render() {
-    this.innerHTML = ''
-    this._notes.forEach((note) => {
-      let noteItem = document.createElement("note-item");
-      noteItem.setAttribute("notes-id", note.id);
-      noteItem.setAttribute("notes-title", note.title);
-      noteItem.setAttribute("notes-body", note.body);
-
-      this.appendChild(noteItem);
-    });
+    this._notes.sort((former, later) => {
+      if(this._sort == 'desc') {
+      // newer first
+      return new Date(later.createdAt).getTime() - new Date(former.createdAt).getTime()
+      } else {
+      // older first
+      return new Date(former.createdAt).getTime() - new Date(later.createdAt).getTime()
+      }
+    })
+    let notes = this._notes
+    try {
+      document.dispatchEvent(new CustomEvent(RENDER_EVENT, {detail: {notes}}))
+    } catch(e) {
+      console.log(e.message)
+    }
   }
 }
 
