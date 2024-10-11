@@ -1,7 +1,11 @@
+import { LS_SORT, RENDER_EVENT } from "../common.js"
+
 class NotesSort extends HTMLElement {
 
     constructor() {
         super()
+
+        this._sort = localStorage.getItem(LS_SORT)
     }
 
     connectedCallback() {
@@ -9,10 +13,17 @@ class NotesSort extends HTMLElement {
         this.render()
     }
 
-    click() {
-        const notesContainer = document.querySelector('notes-container')
-        let sort = (notesContainer.getAttribute('sort') == 'asc') ? 'desc' : 'asc'
-        notesContainer.setAttribute('sort', sort)
+    click(){
+        let sort = (this._sort == 'asc') ? 'desc' : 'asc'
+        try{
+            localStorage.setItem(LS_SORT, sort)
+            this._sort = sort
+
+            document.dispatchEvent(new CustomEvent(RENDER_EVENT))
+        } catch (e) {
+            console.log(e.message)
+        }
+
     }
 
     render() {
