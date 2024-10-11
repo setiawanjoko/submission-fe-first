@@ -13,6 +13,11 @@ class NotesFilter extends HTMLElement {
 
     this._shadowRoot = this.attachShadow({ mode: "closed" });
     this.addEventListener('click', this.click)
+    this._archive = localStorage.getItem(LS_SCOPE)
+    
+    if( this._archive === this.getAttribute('archive') )  {
+      this.setAttribute("active", "true")
+    }
   }
 
   render() {
@@ -24,6 +29,7 @@ class NotesFilter extends HTMLElement {
         anchor.style = 'text-decoration: none; color: #4379F2; cursor: pointer;'
     }
     anchor.textContent = this._mapping[this.getAttribute('archive')]
+
 
     //console.log("RENDERED: notes-filter")
     this._shadowRoot.appendChild(anchor)
