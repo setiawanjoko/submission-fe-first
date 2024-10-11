@@ -1,9 +1,13 @@
-import { deleteNoteHandler, getNotesHandler, getArchivedHandler } from "./services.js"
+//import Swal from 'sweetalert2'
+import { deleteNoteHandler, getNotesHandler, getArchivedHandler, addNoteHandler, archiveNoteHandler, unarchiveNoteHandler } from "./services.js"
 
 const URL = "https://notes-api.dicoding.dev/v2"
 const LS_SORT = 'sort'
 const LS_SCOPE = 'scope'
 const RENDER_EVENT = 'render_notes'
+const STORE_EVENT = 'store_note'
+const ARCHIVE_EVENT = 'archive_note'
+const UNARCHIVE_EVENT = 'unarchive_note'
 const DELETE_EVENT = 'delete_note'
 
 const sorting = (former, later) => {
@@ -43,23 +47,81 @@ const renderNoteItems = async (e) => {
     });
 }
 
-const addNote = (e) => {
-    let note = e.detail.note
+const addNote = async (e) => {
+    //console.log(`EVENT TRIGGERED: ${STORE_EVENT}`, e.detail)
+    let {title, body} = e.detail
 
+    let note = await addNoteHandler({title, body})
+    if(note.id) {
+        //console.log('ADD NOTE: success')
+        document.dispatchEvent(new CustomEvent(RENDER_EVENT))
+    } else {
+        //console.log('ADD NOTE: failed')
+        // TODO: add failed notification
+    }
 }
 
-const deleteNote = (e) => {
-    let id = e.detail.id
-    return deleteNoteHandler(id);
+const archiveNote = async (e) => {
+    // console.log(`EVENT TRIGGERED: ${ARCHIVE_EVENT}`, e.detail)
+    let { id } = e.detail
+
+    let isSuccess = await archiveNoteHandler(id)
+    if(isSuccess) {
+        document.dispatchEvent(new CustomEvent(RENDER_EVENT))
+        
+        console.log('ARCHIVE NOTE: success')
+    } else {
+        console.log('ARCHIVE NOTE: failed')
+    }
+}
+
+const unarchiveNote = async (e) => {
+    // console.log(`EVENT TRIGGERED: ${UNARCHIVE_EVENT}`, e.detail)
+    let { id } = e.detail
+
+    if( !id ) {
+        // TODO Failed id not valid
+        // console.log("ID Not Valid")
+    }
+
+    let isSuccess = await unarchiveNoteHandler(id)
+    if(isSuccess) {
+        document.dispatchEvent(new CustomEvent(RENDER_EVENT))
+        
+        console.log('UNARCHIVE NOTE: success')
+    } else {
+        console.log('UNARCHIVE NOTE: failed')
+    }
+}
+
+const deleteNote = async (e) => {
+    // console.log(`EVENT TRIGGERED: ${DELETE_EVENT}`, e.detail)
+    let {id} = e.detail
+
+    try {
+        if( !id ) {
+            throw new ClientError("Id tidak valid")
+        }
+    
+        let isSuccess = await deleteNoteHandler(id)
+        if(isSuccess) {
+            document.dispatchEvent(new CustomEvent(RENDER_EVENT))
+            
+            console.log('DELETE NOTE: success')
+        } else {
+            console.log('DELETE NOTE: failed')
+        }
+    } catch(e) {
+        //Swal.fire(e.getMessage(), 'error')
+    }
 }
 
 
 document.addEventListener(RENDER_EVENT, renderNoteItems, false)
 document.addEventListener(DELETE_EVENT, deleteNote, false)
+document.addEventListener(STORE_EVENT, addNote, false)
+document.addEventListener(ARCHIVE_EVENT, archiveNote, false)
+document.addEventListener(UNARCHIVE_EVENT, unarchiveNote, false)
 
 
-export { LS_SCOPE, LS_SORT, RENDER_EVENT, DELETE_EVENT, URL }
-
-
-
-students => plural
+export { LS_SCOPE, LS_SORT, RENDER_EVENT, DELETE_EVENT, STORE_EVENT, ARCHIVE_EVENT, UNARCHIVE_EVENT, URL }
