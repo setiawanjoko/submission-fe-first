@@ -1,5 +1,5 @@
 import { ARCHIVE_EVENT, DELETE_EVENT, RENDER_EVENT, UNARCHIVE_EVENT } from "../common.js"
-import { getNotesHandler } from "../services.js"
+import Swal from 'sweetalert2'
 class NoteItem extends HTMLElement {
     static observedAttributes = ['notes-id', 'notes-title', 'notes-body']
     constructor() {
@@ -32,8 +32,10 @@ class NoteItem extends HTMLElement {
         
         if(this.getAttribute('notes-archived') == "true") {
             document.dispatchEvent(new CustomEvent(UNARCHIVE_EVENT, {detail: {id}}))
+            Swal.fire("Catatan berhasil di unarchive")
         } else {
             document.dispatchEvent(new CustomEvent(ARCHIVE_EVENT, {detail: {id}}))
+            Swal.fire("Catatan berhasil di archive")
         }
     }
 

@@ -22,18 +22,17 @@ const sorting = (former, later) => {
 }
 
 const renderNoteItems = async (e) => {    
+    //console.log("EVENT TRIGGERED: render")
     let dateOptions = {day: 'numeric', month: 'long', year: 'numeric'}
     let notes = []
     const noteList = document.querySelector('notes-container')
 
     let isArchived = localStorage.getItem(LS_SCOPE)
-    //console.log("isArchived", isArchived, typeof(isArchived))
     if(isArchived === "true") {
         notes = await getArchivedHandler()
     } else {
         notes = await getNotesHandler()
     }
-    //console.log(notes)
     notes.sort(sorting)
     noteList.innerHTML = ''
     notes.forEach(note => {
