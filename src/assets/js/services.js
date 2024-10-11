@@ -32,7 +32,7 @@ const getNotesHandler = async () => {
 
 // Mandatory
 const getArchivedHandler = async () => {
-    //console.log("API CALL: Archive")
+    //console.log("API CALL: Get Archive")
     let notes = []
     notes = await fetch(`${URL}/notes/archived`)
     .then((response) => {
@@ -64,15 +64,25 @@ const getNoteHandler = (id) => {
 
 // Mandatory
 const addNoteHandler = async (note) => {
-    await fetch(`${url}/notes`, {
+    return await fetch(`${URL}/notes`, {
         method:"POST",
         headers: {
             'Content-Type': 'application/json'
         },
-        body: JSON.stringify(notes)
+        body: JSON.stringify(note)
     })
     .then(response => {
-        
+        return response.json()
+    })
+    .then(responseJson => {
+        if(responseJson.error) {
+            console.log(responseJson)
+        } else {
+            return responseJson.data
+        }
+    })
+    .catch((error) => {
+        console.log(error)
     })
 }
 
@@ -94,23 +104,61 @@ const updateNoteHandler = (id, {title, body, archived}) => {
     return id
 }
 
-// Mandatory
-const deleteNoteHandler = (id) => {
-    const notes = getAllNotesHandler()
-    const index = notes.findIndex((note) => {
-        return note.id == id
+// Mandatory 
+const archiveNoteHandler = async (id) => {
+    // console.log("API CALL: Archive Note", id)
+    return await fetch(`${URL}/notes/${id}/archive`, {method: "POST"})
+    .then((response) => {
+        return response.json()
     })
-    if(index == -1) {
-        return false
-    }
-
-    notes.splice(index, 1)
-    localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(notes))
-    return true
+    .then((responseJson) => {
+        if(responseJson.status == "success") {
+            return true
+        } else {
+            return false
+        }
+    })
+    .catch((e) => {
+        console.log(e.getMessage())
+    })
 }
 
-// Optional
-const setArchiveHandler = (id) => {
+// Mandatory 
+const unarchiveNoteHandler = async (id) => {
+    // console.log("API CALL: Unarchive Note", id)
+    return await fetch(`${URL}/notes/${id}/unarchive`, {method: "POST"})
+    .then((response) => {
+        return response.json()
+    })
+    .then((responseJson) => {
+        if(responseJson.status == "success") {
+            return true
+        } else {
+            return false
+        }
+    })
+    .catch((e) => {
+        console.log(e.getMessage())
+    })
 }
 
-export { getNotesHandler, getArchivedHandler, getNoteHandler, addNoteHandler, updateNoteHandler, deleteNoteHandler }
+// Mandatory
+const deleteNoteHandler = async (id) => {
+    // console.log("API CALL: Delete Note", id)
+    return await fetch(`${URL}/notes/${id}`, {method: "DELETE"})
+    .then((response) => {
+        return response.json()
+    })
+    .then((responseJson) => {
+        if(responseJson.status == "success") {
+            return true
+        } else {
+            return false
+        }
+    })
+    .catch((e) => {
+        console.log(e.getMessage())
+    })
+}
+
+export { getNotesHandler, getArchivedHandler, getNoteHandler, addNoteHandler, updateNoteHandler, archiveNoteHandler, unarchiveNoteHandler, deleteNoteHandler }
