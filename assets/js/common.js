@@ -1,5 +1,6 @@
 import { deleteNoteHandler, getAllNotesHandler } from "./services.js"
 
+const URL = "https://notes-api.dicoding.dev/v2"
 const LOCAL_STORAGE_KEY = 'notes_fe_subs'
 const RENDER_EVENT = 'render_notes'
 const DELETE_EVENT = 'delete_note'
@@ -36,4 +37,4 @@ document.addEventListener(RENDER_EVENT, renderNoteItems, false)
 document.addEventListener(DELETE_EVENT, deleteNote, false)
 
 
-export { LOCAL_STORAGE_KEY, RENDER_EVENT, DELETE_EVENT }
+export { LOCAL_STORAGE_KEY, RENDER_EVENT, DELETE_EVENT, URL }

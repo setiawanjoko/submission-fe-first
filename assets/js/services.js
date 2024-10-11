@@ -1,4 +1,4 @@
-import { LOCAL_STORAGE_KEY } from "./common.js"
+import { RENDER_EVENT, URL } from "./common.js"
 
 const generateId = () => {
     return `notes-${new Date().now()}`
@@ -9,7 +9,18 @@ const generateCurrentTimeStamp = () => {
 }
 
 const getAllNotesHandler = () => {
-    return JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY)) || null
+    fetch(`${URL}/notes`)
+    .then((response) => {
+        response.json()
+    })
+    .then((responseJson) => {
+        if(responseJson.error) {
+            // TODO: show error message
+        } else {
+            let notes = responseJson.data
+            document.dispatchEvent(new CustomEvent(RENDER_EVENT, {detail: {notes}}))
+        }
+    })
 }
 
 const getNoteHandler = (id) => {
