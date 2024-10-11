@@ -1,0 +1,15 @@
+{
+  "name": "submission-fe-first",
+  "version": "1.0.0",
+  "description": "- [x] Menampilkan Daftar Catatan dengan Baik\r - [x] Formulir Tambah Catatan\r - [x] CSS Grid sebagai Metode Layouting\r - [x] Bangun Komponen UI dengan Web Web Component",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "webpack": "^5.95.0",
+    "webpack-cli": "^5.1.4"
+  }
+}
