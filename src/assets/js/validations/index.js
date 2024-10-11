@@ -6,7 +6,12 @@ const form = document.querySelector('form')
 const titleInput = form.elements.notetitle
 const bodyInput = form.elements.notebody
 
-form.addEventListener('submit', e => e.preventDefault())
+form.addEventListener('submit', e => {
+    e.preventDefault()
+    const title = titleInput.value
+    const body = bodyInput.value
+    console.log({title, body})
+})
 titleInput.addEventListener('change', customValidationTitleHandler)
 titleInput.addEventListener('invalid', customValidationTitleHandler)
 titleInput.addEventListener('blur', blurValidationHandler)

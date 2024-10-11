@@ -6,8 +6,8 @@
     <title>Submission Frontend Ke Satu</title>
 
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
-    <link rel="stylesheet" href="./assets/css/style.css">
-    <script type="module" src="./assets/js/script.js"></script>
+    <link rel="stylesheet" href="./src/assets/css/style.css">
+    <script type="module" src="./src/assets/js/script.js"></script>
 </head>
 <body>
     <app-logo></app-logo>
@@ -30,9 +30,8 @@
     <main>
         <h2 class="card-title">Notes</h2>
         <div class="notes-filter">
-            <notes-filter active note-scope="all"></notes-filter> | 
-            <notes-filter note-scope="no-archive"></notes-filter> | 
-            <notes-filter note-scope="archive"></notes-filter>
+            <notes-filter active archive="true"></notes-filter> | 
+            <notes-filter archive="false"></notes-filter>
             <notes-sort></notes-sort>
         </div>
         <notes-container note-scope="all" class="list" id="notesList"></notes-container>

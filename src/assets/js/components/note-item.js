@@ -1,5 +1,5 @@
-import { LOCAL_STORAGE_KEY, DELETE_EVENT, RENDER_EVENT } from "../common.js"
-import { getAllNotesHandler } from "../services.js"
+import { DELETE_EVENT, RENDER_EVENT } from "../common.js"
+import { getNotesHandler } from "../services.js"
 class NoteItem extends HTMLElement {
     static observedAttributes = ['notes-id', 'notes-title', 'notes-body']
     constructor() {
@@ -29,19 +29,14 @@ class NoteItem extends HTMLElement {
 
     archive() {
         const id = this.parentNode.getAttribute('notes-id')
-        const notes = JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY))
-        const index = notes.findIndex((note) => {
-            return note.id == id
-        })
-        notes[index].archived = !(notes[index].archived)
-        localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(notes))
+        // TODO: handle it to API
     }
 
     destroy() {
         let id = this.getAttribute('notes-id')
         let isDestroyed = document.dispatchEvent(new CustomEvent(DELETE_EVENT, {detail: {id}}))
         
-        let notes = getAllNotesHandler()
+        let notes = getNotesHandler()
         console.log(notes)
         if(isDestroyed) document.dispatchEvent(new CustomEvent(RENDER_EVENT, {detail:{notes}}))
     }

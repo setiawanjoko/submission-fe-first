@@ -3,8 +3,9 @@
   "version": "1.0.0",
   "description": "- [x] Menampilkan Daftar Catatan dengan Baik\r - [x] Formulir Tambah Catatan\r - [x] CSS Grid sebagai Metode Layouting\r - [x] Bangun Komponen UI dengan Web Web Component",
   "main": "index.js",
+  "type":"module",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "webpack"
   },
   "author": "",
   "license": "ISC",
