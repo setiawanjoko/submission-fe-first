@@ -1,4 +1,4 @@
-import { DELETE_EVENT, RENDER_EVENT } from "../common.js"
+import { ARCHIVE_EVENT, DELETE_EVENT, RENDER_EVENT, UNARCHIVE_EVENT } from "../common.js"
 import { getNotesHandler } from "../services.js"
 class NoteItem extends HTMLElement {
     static observedAttributes = ['notes-id', 'notes-title', 'notes-body']
@@ -21,24 +21,27 @@ class NoteItem extends HTMLElement {
         
         const destroy = document.createElement('a')
         destroy.innerHTML = 'Delete'
-        destroy.style = 'font-size: smaller; color: #4379F2; cursor: pointer;'
+        destroy.style = 'font-size: smaller; color: #4379F2; cursor: pointer; margin-left: 4px;'
         destroy.addEventListener('click', this.destroy.bind(this))
 
         this.append(titleElement, bodyElement, dating, archive, destroy)
     }
 
     archive() {
-        const id = this.parentNode.getAttribute('notes-id')
-        // TODO: handle it to API
+        const id = this.getAttribute('notes-id')
+        
+        if(this.getAttribute('notes-archived') == "true") {
+            document.dispatchEvent(new CustomEvent(UNARCHIVE_EVENT, {detail: {id}}))
+        } else {
+            document.dispatchEvent(new CustomEvent(ARCHIVE_EVENT, {detail: {id}}))
+        }
     }
 
     destroy() {
         let id = this.getAttribute('notes-id')
         let isDestroyed = document.dispatchEvent(new CustomEvent(DELETE_EVENT, {detail: {id}}))
         
-        let notes = getNotesHandler()
-        console.log(notes)
-        if(isDestroyed) document.dispatchEvent(new CustomEvent(RENDER_EVENT, {detail:{notes}}))
+        if(isDestroyed) document.dispatchEvent(new CustomEvent(RENDER_EVENT))
     }
 }
 
