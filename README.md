@@ -25,14 +25,14 @@
 ## Mandatory
 
 - [ ] Pertahankan Kriteria Submission Sebelumnya
-- [ ] Memanfaatkan RESTful API sebagai Sumber Data
+- [x] Memanfaatkan RESTful API sebagai Sumber Data
 - [ ] Menggunakan webpack sebagai Module Bundler
-- [ ] Menggunakan Fetch API
+- [x] Menggunakan Fetch API
 - [ ] Memiliki Indikator Loading
 
 ## Optional
 
-- [ ] Memiliki Fitur Arsip Catatan
+- [x] Memiliki Fitur Arsip Catatan
 - [ ] Menampilkan Feedback Saat Terjadi Error
 - [ ] Memiliki Efek Pergerakan Halus Atau Animasi
 - [ ] Menerapkan Prettier sebagai Code Formatter
