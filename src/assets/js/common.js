@@ -11,7 +11,8 @@ const UNARCHIVE_EVENT = 'unarchive_note'
 const DELETE_EVENT = 'delete_note'
 
 const sorting = (former, later) => {
-    if(localStorage.getItem(LS_SORT) === 'desc') {
+    //console.log("SORTED:", localStorage.getItem(LS_SORT))
+    if(localStorage.getItem(LS_SORT) == 'desc') {
         // newer first
         return new Date(later.createdAt).getTime() - new Date(former.createdAt).getTime()
         } else {
