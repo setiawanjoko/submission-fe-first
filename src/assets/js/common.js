@@ -101,7 +101,7 @@ const archiveNote = async (e) => {
   let { id } = e.detail;
 
   try {
-    let {status, message} = await archiveNoteHandler(id);
+    let { status, message } = await archiveNoteHandler(id);
     if (status == "success") {
       Swal.fire({
         title: "Success!",
@@ -126,57 +126,89 @@ const archiveNote = async (e) => {
 const unarchiveNote = async (e) => {
   let { id } = e.detail;
 
-  try {
-    let {status, message} = await unarchiveNoteHandler(id);
-    if (status == "success") {
-      Swal.fire({
-        title: "Success!",
-        text: message,
-        icon: "success",
-        confirmButtonText: "OK",
-      });
-      document.dispatchEvent(new CustomEvent(RENDER_EVENT));
+  await Swal.fire({
+    title: "Unarchive note",
+    text: "Are you sure to unarchive the note?",
+    icon: "question",
+    showDenyButton: true,
+    showCancelButton: false,
+    confirmButtonText: "Unarchive",
+    denyButtonText: "Cancel",
+  }).then(async (result) => {
+    if (result.isConfirmed) {
+      try {
+        let { status, message } = await unarchiveNoteHandler(id);
+        if (status == "success") {
+          Swal.fire({
+            title: "Success!",
+            text: message,
+            icon: "success",
+            confirmButtonText: "OK",
+          });
+          document.dispatchEvent(new CustomEvent(RENDER_EVENT));
+        } else {
+          throw new ServerError(message);
+        }
+      } catch (error) {
+        Swal.fire({
+          title: "Error!",
+          text: error.message,
+          icon: "error",
+          confirmButtonText: "OK",
+        });
+      }
     } else {
-      throw new ServerError(message);
+      Swal.fire({
+        title: "Info!",
+        text: "Action was canceled",
+        icon: "info",
+      });
     }
-  } catch (error) {
-    Swal.fire({
-      title: "Error!",
-      text: error.message,
-      icon: "error",
-      confirmButtonText: "OK",
-    });
-  }
+  });
 };
 
 const deleteNote = async (e) => {
   let { id } = e.detail;
 
-  try {
-    if (!id) {
-      throw new ClientError("Id tidak valid");
-    }
-
-    let {status, message} = await deleteNoteHandler(id);
-    if (status == "success") {
-      Swal.fire({
-        title: "Success!",
-        text: message,
-        icon: "success",
-        confirmButtonText: "OK",
-      });
-      document.dispatchEvent(new CustomEvent(RENDER_EVENT));
+  Swal.fire({
+    title: "Delete note",
+    text: "Are you sure to delete the note?",
+    icon: "question",
+    showDenyButton: true,
+    showCancelButton: false,
+    confirmButtonText: "Delete",
+    denyButtonText: "Cancel",
+  }).then(async (result) => {
+    if (result.isConfirmed) {
+      try {
+        let { status, message } = await deleteNoteHandler(id);
+        if (status == "success") {
+          Swal.fire({
+            title: "Success!",
+            text: message,
+            icon: "success",
+            confirmButtonText: "OK",
+          });
+          document.dispatchEvent(new CustomEvent(RENDER_EVENT));
+        } else {
+          throw new ServerError(message);
+        }
+      } catch (e) {
+        Swal.fire({
+          title: "Error!",
+          text: error.message,
+          icon: "error",
+          confirmButtonText: "OK",
+        });
+      }
     } else {
-      throw new ServerError(message);
+      Swal.fire({
+        title: "Info!",
+        text: "Note deletion was canceled",
+        icon: "info",
+      });
     }
-  } catch (e) {
-    Swal.fire({
-      title: "Error!",
-      text: error.message,
-      icon: "error",
-      confirmButtonText: "OK",
-    });
-  }
+  });
 };
 
 document.addEventListener(RENDER_EVENT, renderNoteItems, false);
