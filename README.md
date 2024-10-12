@@ -5,7 +5,7 @@
 - [x] Menampilkan Daftar Catatan dengan Baik
 - [x] Formulir Tambah Catatan
 - [x] CSS Grid sebagai Metode Layouting
-- [x] Bangun Komponen UI dengan Web Web Component
+- [x] Bangun Komponen UI dengan Web Component
 
 ## Optional
 
@@ -16,23 +16,21 @@
 
 ## User Target
 
-- [ ] Add New Notes to Local Storage
-- [ ] Archive and Activate Notes
 - [x] Sorting by date
 
 # Second Submission TODO List
 
 ## Mandatory
 
-- [ ] Pertahankan Kriteria Submission Sebelumnya
+- [x] Pertahankan Kriteria Submission Sebelumnya
 - [x] Memanfaatkan RESTful API sebagai Sumber Data
-- [ ] Menggunakan webpack sebagai Module Bundler
+- [x] Menggunakan webpack sebagai Module Bundler
 - [x] Menggunakan Fetch API
 - [ ] Memiliki Indikator Loading
 
 ## Optional
 
 - [x] Memiliki Fitur Arsip Catatan
-- [ ] Menampilkan Feedback Saat Terjadi Error
+- [x] Menampilkan Feedback Saat Terjadi Error
 - [ ] Memiliki Efek Pergerakan Halus Atau Animasi
 - [ ] Menerapkan Prettier sebagai Code Formatter

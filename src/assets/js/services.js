@@ -1,68 +1,19 @@
 import { URL } from "./common.js"
+import { ClientError, ServerError } from "./exceptions.js"
 
-const generateId = () => {
-    return `notes-${new Date().now()}`
-}
+/**
+ * Alur services
+ * /notes
+ * [x]  [POST]   Add Note
+ * [x]  [GET]    Get Notes
+ * [x]  [GET]    Get Archived Notes
+ * [x]  [GET]    Get Single Note
+ * [x]  [POST]   Archive Note
+ * [x]  [POST]   Unarchive Note
+ * [x]  [DELETE] Delete Note
+ */
 
-const generateCurrentTimeStamp = () => {
-    return new Date().toISOString()
-}
-
-// Mandatory
-const getNotesHandler = async () => {
-    //console.log("API CALL: Notes")
-    let notes = []
-    notes = await fetch(`${URL}/notes`)
-    .then((response) => {
-        return response.json()
-    })
-    .then((responseJson) => {
-        if(responseJson.error) {
-            console.log(responseJson)
-        } else {
-            return responseJson.data
-        }
-    })
-    .catch((error) => {
-        console.log(error)
-    })
-    
-    return notes
-}
-
-// Mandatory
-const getArchivedHandler = async () => {
-    //console.log("API CALL: Get Archive")
-    let notes = []
-    notes = await fetch(`${URL}/notes/archived`)
-    .then((response) => {
-        return response.json()
-    })
-    .then((responseJson) => {
-        if(responseJson.error) {
-            console.log(responseJson)
-        } else {
-            return responseJson.data
-        }
-    })
-    .catch((error) => {
-        console.log(error)
-    })
-    
-    return notes
-}
-
-// Optional
-const getNoteHandler = (id) => {
-    const notes = getAllNotesHandler()
-    const index = notes.findIndex((note) => {
-        return note.id == id
-    })
-
-    return notes[index]
-}
-
-// Mandatory
+// [POST]   Add Note
 const addNoteHandler = async (note) => {
     return await fetch(`${URL}/notes`, {
         method:"POST",
@@ -75,90 +26,129 @@ const addNoteHandler = async (note) => {
         return response.json()
     })
     .then(responseJson => {
-        if(responseJson.error) {
-            console.log(responseJson)
+        if(responseJson.status == "fail") {
+            throw new ClientError(responseJson.message)
         } else {
-            return responseJson.data
+            return responseJson
         }
     })
     .catch((error) => {
-        console.log(error)
+        throw new ServerError(error.message)
     })
 }
 
-// Optional
-const updateNoteHandler = (id, {title, body, archived}) => {
-    const notes = getAllNotesHandler()
-    const index = notes.findIndex((note) => {
-        return note.id == id
+// [GET]    Get Notes
+const getNotesHandler = async () => {
+    let notes = []
+    notes = await fetch(`${URL}/notes`)
+    .then((response) => {
+        return response.json()
     })
-    if(index == -1) {
-        return -1
-    }
-
-    notes[index].title = title
-    notes[index].body = body
-    notes[index].archived = archived
-
-    localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(notes))
-    return id
+    .then((responseJson) => {
+        if(responseJson.status == "fail") {
+            throw new ClientError(responseJson.message)
+        } else {
+            return responseJson
+        }
+    })
+    .catch((error) => {
+        throw new ServerError(error.message)
+    })
+    
+    return notes
 }
 
-// Mandatory 
+// [GET]    Get Archived Notes
+const getArchivedHandler = async () => {
+    let notes = []
+    notes = await fetch(`${URL}/notes/archived`)
+    .then((response) => {
+        return response.json()
+    })
+    .then((responseJson) => {
+        if(responseJson.status == "fail") {
+            throw new ClientError(responseJson.message)
+        } else {
+            return responseJson
+        }
+    })
+    .catch((error) => {
+        throw new ServerError(error.message)
+    })
+    
+    return notes
+}
+
+// [GET]    Get Single Note
+const getNoteHandler = async (id) => {
+    return await fetch(`${URL}/notes/${id}`)
+    .then((response) => {
+        return response.json()
+    })
+    .then((responseJson) => {
+        if(responseJson.status == "fail") {
+            throw new ClientError(responseJson.message)
+        } else {
+            return responseJson
+        }
+    })
+    .catch((error) => {
+        throw new ServerError(error.message)
+    })
+}
+
+// [POST]   Archive Note
 const archiveNoteHandler = async (id) => {
-    // console.log("API CALL: Archive Note", id)
     return await fetch(`${URL}/notes/${id}/archive`, {method: "POST"})
     .then((response) => {
         return response.json()
     })
     .then((responseJson) => {
         if(responseJson.status == "success") {
-            return true
+            return responseJson
         } else {
-            return false
+            throw new ClientError(responseJson.message)
         }
     })
     .catch((e) => {
-        console.log(e.getMessage())
+        throw new ServerError(e.message)
     })
 }
 
-// Mandatory 
+// [POST]   Unarchive Note
 const unarchiveNoteHandler = async (id) => {
-    // console.log("API CALL: Unarchive Note", id)
     return await fetch(`${URL}/notes/${id}/unarchive`, {method: "POST"})
     .then((response) => {
         return response.json()
     })
     .then((responseJson) => {
         if(responseJson.status == "success") {
-            return true
+            return responseJson
         } else {
-            return false
+            throw new ClientError(responseJson.message)
         }
     })
     .catch((e) => {
-        console.log(e.getMessage())
+        throw new ServerError(e.message)
     })
 }
 
-// Mandatory
+// [DELETE] Delete Note
 const deleteNoteHandler = async (id) => {
-    // console.log("API CALL: Delete Note", id)
     return await fetch(`${URL}/notes/${id}`, {method: "DELETE"})
     .then((response) => {
         return response.json()
     })
     .then((responseJson) => {
         if(responseJson.status == "success") {
-            return true
+            return responseJson
         } else {
-            return false
+            throw new ClientError(responseJson.message)
         }
     })
     .catch((e) => {
-        console.log(e.getMessage())
+        throw new ServerError(e.message)
     })
 }
 
-export { getNotesHandler, getArchivedHandler, getNoteHandler, addNoteHandler, updateNoteHandler, archiveNoteHandler, unarchiveNoteHandler, deleteNoteHandler }
+export { getNotesHandler, getArchivedHandler, getNoteHandler, addNoteHandler, archiveNoteHandler, unarchiveNoteHandler, deleteNoteHandler }
