@@ -33,42 +33,49 @@ const sorting = (former, later) => {
 };
 
 const renderNoteItems = async (e) => {
-  let dateOptions = { day: "numeric", month: "long", year: "numeric" };
-  let notes = [];
-  const noteList = document.querySelector("notes-container");
+  Swal.fire({
+    title: "Loading",
+    showConfirmButton: false,
+    didOpen: async () => {
+      let dateOptions = { day: "numeric", month: "long", year: "numeric" };
+      let notes = [];
+      const noteList = document.querySelector("notes-container");
 
-  let isArchived = localStorage.getItem(LS_SCOPE);
-  try {
-    if (isArchived === "true") {
-      let { message, data } = await getArchivedHandler();
-      notes = data;
-    } else {
-      let { message, data } = await getNotesHandler();
-      notes = data;
-    }
-    notes.sort(sorting);
-    noteList.innerHTML = "";
-    notes.forEach((note) => {
-      let noteItem = document.createElement("note-item");
-      noteItem.setAttribute("notes-id", note.id);
-      noteItem.setAttribute("notes-title", note.title);
-      noteItem.setAttribute("notes-body", note.body);
-      noteItem.setAttribute("notes-archived", note.archived);
-      noteItem.setAttribute(
-        "notes-created",
-        new Date(note.createdAt).toLocaleDateString("en-UK", dateOptions),
-      );
+      let isArchived = localStorage.getItem(LS_SCOPE);
+      try {
+        if (isArchived === "true") {
+          let { message, data } = await getArchivedHandler();
+          notes = data;
+        } else {
+          let { message, data } = await getNotesHandler();
+          notes = data;
+        }
+        notes.sort(sorting);
+        noteList.innerHTML = "";
+        notes.forEach((note) => {
+          let noteItem = document.createElement("note-item");
+          noteItem.setAttribute("notes-id", note.id);
+          noteItem.setAttribute("notes-title", note.title);
+          noteItem.setAttribute("notes-body", note.body);
+          noteItem.setAttribute("notes-archived", note.archived);
+          noteItem.setAttribute(
+            "notes-created",
+            new Date(note.createdAt).toLocaleDateString("en-UK", dateOptions),
+          );
 
-      noteList.appendChild(noteItem);
-    });
-  } catch (error) {
-    Swal.fire({
-      title: "Error!",
-      text: error.message,
-      icon: "error",
-      confirmButtonText: "OK",
-    });
-  }
+          noteList.appendChild(noteItem);
+        });
+        Swal.close()
+      } catch (error) {
+        Swal.fire({
+          title: "Error!",
+          text: error.message,
+          icon: "error",
+          confirmButtonText: "OK",
+        });
+      }
+    },
+  });
 };
 
 const addNote = async (e) => {
