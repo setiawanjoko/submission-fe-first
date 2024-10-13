@@ -26,11 +26,11 @@
 - [x] Memanfaatkan RESTful API sebagai Sumber Data
 - [x] Menggunakan webpack sebagai Module Bundler
 - [x] Menggunakan Fetch API
-- [ ] Memiliki Indikator Loading
+- [x] Memiliki Indikator Loading
 
 ## Optional
 
 - [x] Memiliki Fitur Arsip Catatan
 - [x] Menampilkan Feedback Saat Terjadi Error
 - [ ] Memiliki Efek Pergerakan Halus Atau Animasi
-- [ ] Menerapkan Prettier sebagai Code Formatter
+- [x] Menerapkan Prettier sebagai Code Formatter
