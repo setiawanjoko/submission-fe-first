@@ -4,54 +4,53 @@ class NotesFilter extends HTMLElement {
   static observedAttributes = ["active", "archive"];
   _mapping = {
     false: "Active",
-    true: "Archived"
-  }
-  _shadowRoot = null
+    true: "Archived",
+  };
+  _shadowRoot = null;
 
   constructor() {
     super();
 
     this._shadowRoot = this.attachShadow({ mode: "closed" });
-    this.addEventListener('click', this.click)
-    this._archive = localStorage.getItem(LS_SCOPE)
-    
-    if( this._archive === this.getAttribute('archive') )  {
-      this.setAttribute("active", "true")
+    this.addEventListener("click", this.click);
+    this._archive = localStorage.getItem(LS_SCOPE);
+
+    if (this._archive === this.getAttribute("archive")) {
+      this.setAttribute("active", "true");
     }
   }
 
   render() {
-    this._shadowRoot.innerHTML = ''
-    const anchor = document.createElement('a')
-    if(this.hasAttribute('active')) {
-        anchor.style = 'text-decoration: underline;'
+    this._shadowRoot.innerHTML = "";
+    const anchor = document.createElement("a");
+    if (this.hasAttribute("active")) {
+      anchor.style = "text-decoration: underline;";
     } else {
-        anchor.style = 'text-decoration: none; color: #4379F2; cursor: pointer;'
+      anchor.style = "text-decoration: none; color: #4379F2; cursor: pointer;";
     }
-    anchor.textContent = this._mapping[this.getAttribute('archive')]
-
+    anchor.textContent = this._mapping[this.getAttribute("archive")];
 
     //console.log("RENDERED: notes-filter")
-    this._shadowRoot.appendChild(anchor)
+    this._shadowRoot.appendChild(anchor);
   }
 
   click() {
     // Remove active attribute in active filter
-    const filter = document.querySelector('notes-filter[active]')
-    filter.toggleAttribute('active')
+    const filter = document.querySelector("notes-filter[active]");
+    filter.toggleAttribute("active");
 
     // Add active attribute in this filter (clicked)
     this.toggleAttribute("active");
-    localStorage.setItem(LS_SCOPE, this.getAttribute("archive"))
+    localStorage.setItem(LS_SCOPE, this.getAttribute("archive"));
 
-    document.dispatchEvent(new CustomEvent(RENDER_EVENT))
+    document.dispatchEvent(new CustomEvent(RENDER_EVENT));
     //console.log("EVENT TRIGGERED: notes-filter click")
 
-    this.render()
+    this.render();
   }
 
   attributeChangedCallback() {
-    this.render()
+    this.render();
   }
 }
 

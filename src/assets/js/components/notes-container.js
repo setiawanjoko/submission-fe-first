@@ -5,15 +5,15 @@ class NotesContainer extends HTMLElement {
   constructor() {
     super();
 
-    this.render()
+    this.render();
   }
 
   render() {
     try {
-      document.dispatchEvent(new CustomEvent(RENDER_EVENT))
+      document.dispatchEvent(new CustomEvent(RENDER_EVENT));
       //console.log("RENDERED: notes-container")
-    } catch(e) {
-      console.log(e.message)
+    } catch (e) {
+      console.log(e.message);
     }
   }
 }

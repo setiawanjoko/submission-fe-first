@@ -1,15 +1,15 @@
 class AppLogo extends HTMLElement {
-    _shadowRoot = null
+  _shadowRoot = null;
 
-    constructor() {
-        super()
+  constructor() {
+    super();
 
-        this._shadowRoot = this.attachShadow({mode: 'closed'})
-    }
+    this._shadowRoot = this.attachShadow({ mode: "closed" });
+  }
 
-    renderStyle() {
-        let style = document.createElement('style')
-        style.textContent = `
+  renderStyle() {
+    let style = document.createElement("style");
+    style.textContent = `
             header > * {
                 color: white;
                 font-family: "Caveat", sans-serif;
@@ -26,39 +26,39 @@ class AppLogo extends HTMLElement {
                     align-items: center;
                 }
             }
-        `
-        
-        return style
-    }
+        `;
 
-    renderHeader() {
-        let header = document.createElement('header')
-        let logo = document.createElement('div')
-        logo.classList.add('logo')
-        let appName = document.createElement('h2')
-        appName.textContent = "Notes App"
+    return style;
+  }
 
-        logo.appendChild(appName)
-        header.appendChild(logo)
+  renderHeader() {
+    let header = document.createElement("header");
+    let logo = document.createElement("div");
+    logo.classList.add("logo");
+    let appName = document.createElement("h2");
+    appName.textContent = "Notes App";
 
-        return header
-    }
+    logo.appendChild(appName);
+    header.appendChild(logo);
 
-    connectedCallback() {
-        this.render()
-    }
+    return header;
+  }
 
-    render() {
-        this._shadowRoot.appendChild(this.renderStyle())
-        this._shadowRoot.appendChild(this.renderHeader())
-        // this._shadowRoot.innerHTML += `
-        // <header>
-        //     <div class="logo">
-        //         <h2>Notes App</h2>
-        //     </div>
-        // </header>
-        // `
-    }
+  connectedCallback() {
+    this.render();
+  }
+
+  render() {
+    this._shadowRoot.appendChild(this.renderStyle());
+    this._shadowRoot.appendChild(this.renderHeader());
+    // this._shadowRoot.innerHTML += `
+    // <header>
+    //     <div class="logo">
+    //         <h2>Notes App</h2>
+    //     </div>
+    // </header>
+    // `
+  }
 }
 
-customElements.define('app-logo', AppLogo)
+customElements.define("app-logo", AppLogo);

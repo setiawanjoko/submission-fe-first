@@ -1,15 +1,15 @@
 class AppFooter extends HTMLElement {
-    _shadowRoot = null
+  _shadowRoot = null;
 
-    constructor() {
-        super()
+  constructor() {
+    super();
 
-        this._shadowRoot = this.attachShadow({mode: 'closed'})
-    }
+    this._shadowRoot = this.attachShadow({ mode: "closed" });
+  }
 
-    renderStyle() {
-        let style = document.createElement('style')
-        style.textContent = `
+  renderStyle() {
+    let style = document.createElement("style");
+    style.textContent = `
         footer > * {
             color: white;
             font-family: sans-serif;
@@ -22,28 +22,28 @@ class AppFooter extends HTMLElement {
                 align-items: center;
             }
         }
-        `
+        `;
 
-        return style
-    }
+    return style;
+  }
 
-    renderFooter() {
-        let footer = document.createElement('footer')
-        let credit = document.createElement('p')
-        credit.textContent = "Made by Setiawan Joko"
-        footer.appendChild(credit)
+  renderFooter() {
+    let footer = document.createElement("footer");
+    let credit = document.createElement("p");
+    credit.textContent = "Made by Setiawan Joko";
+    footer.appendChild(credit);
 
-        return footer
-    }
+    return footer;
+  }
 
-    connectedCallback() {
-        this.render()
-    }
+  connectedCallback() {
+    this.render();
+  }
 
-    render() {
-        this._shadowRoot.appendChild(this.renderStyle())
-        this._shadowRoot.appendChild(this.renderFooter())
-    }
+  render() {
+    this._shadowRoot.appendChild(this.renderStyle());
+    this._shadowRoot.appendChild(this.renderFooter());
+  }
 }
 
-customElements.define('app-footer', AppFooter)
+customElements.define("app-footer", AppFooter);
